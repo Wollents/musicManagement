@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.tzjw.music.dao.MVMapper">
+    <resultMap id="BaseResultMap" type="team.tzjw.music.pojo.MV">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="mvWidth" jdbcType="INTEGER" property="mvwidth" />
+        <result column="mvHeight" jdbcType="INTEGER" property="mvheight" />
+        <result column="mvDesc" jdbcType="VARCHAR" property="mvdesc" />
+        <result column="mvTime" jdbcType="REAL" property="mvtime" />
+        <result column="singerId" jdbcType="VARCHAR" property="singerid" />
+        <result column="singer" jdbcType="VARCHAR" property="singer" />
+        <result column="userId" jdbcType="VARCHAR" property="userid" />
+        <result column="mvPath" jdbcType="VARCHAR" property="mvpath" />
+        <result column="size" jdbcType="DOUBLE" property="size" />
+        <result column="playNum" jdbcType="BIGINT" property="playnum" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="likeCounts" jdbcType="BIGINT" property="likecounts" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mv
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="team.tzjw.music.pojo.MV">
+    insert into mv (id, mvWidth, mvHeight,
+      mvDesc, mvTime, singerId,
+      singer, userId, mvPath,
+      size, playNum, createTime,
+      likeCounts, status)
+    values (#{id,jdbcType=VARCHAR}, #{mvwidth,jdbcType=INTEGER}, #{mvheight,jdbcType=INTEGER},
+      #{mvdesc,jdbcType=VARCHAR}, #{mvtime,jdbcType=REAL}, #{singerid,jdbcType=VARCHAR},
+      #{singer,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{mvpath,jdbcType=VARCHAR},
+      #{size,jdbcType=DOUBLE}, #{playnum,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP},
+      #{likecounts,jdbcType=BIGINT}, #{status,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="team.tzjw.music.pojo.MV">
+    update mv
+    set mvWidth = #{mvwidth,jdbcType=INTEGER},
+      mvHeight = #{mvheight,jdbcType=INTEGER},
+      mvDesc = #{mvdesc,jdbcType=VARCHAR},
+      mvTime = #{mvtime,jdbcType=REAL},
+      singerId = #{singerid,jdbcType=VARCHAR},
+      singer = #{singer,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      mvPath = #{mvpath,jdbcType=VARCHAR},
+      size = #{size,jdbcType=DOUBLE},
+      playNum = #{playnum,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      likeCounts = #{likecounts,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, mvWidth, mvHeight, mvDesc, mvTime, singerId, singer, userId, mvPath, size,
+    playNum, createTime, likeCounts, status
+    from mv
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, mvDesc, mvTime, singer, userId, mvPath, playNum, createTime, likeCounts, status
+    from mv limit #{page},#{limit}
+  </select>
+    <update id="updateStatus">
+    update mv
+    set status=#{status}
+    where id = #{id}
+  </update>
+    <select id="detail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select name as userId, size, mvDesc, mvPath, mvHeight, mvWidth
+    from mv, user
+    where mv.id = #{id} and user.id = mv.userId
+  </select>
+    <select id="countMv" resultType="java.lang.Long">
+    select count(id)
+    from mv
+  </select>
+    <select id="editDetail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, userId, mvDesc, playNum, likeCounts
+    from mv
+    where id = #{id}
+  </select>
+    <update id="mvUpdate">
+    update mv
+    set userId = #{userid}, mvDesc = #{mvdesc}, playNum = #{playnum}, likeCounts = #{likecounts}
+    where id = #{id}
+  </update>
+    <select id="getNums" resultType="java.lang.Integer">
+    select count(*)
+    from mv
+   </select>
+</mapper>

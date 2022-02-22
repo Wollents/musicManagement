@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+</head>
+<body>
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <!--导航面板-->
+        <div class="layui-col-xs3">
+            <!--卡片布局-->
+            <div class="layui-card">
+                <div class="layui-card-header">快捷导航</div>
+                <!--按钮容器-->
+                <div class="layui-btn-container">
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="type.html" class="layui-btn layui-btn-lg layui-btn-normal">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                    <a href="mv.html" class="layui-btn layui-btn-lg layui-btn-normal">
+                        <i class="layui-icon layui-icon-video"><br></i>
+                    </a>
+                    <a href="person.html" class="layui-btn layui-btn-lg layui-btn-normal">
+                        <i class="layui-icon layui-icon-edit"><br></i>
+                    </a>
+                </div>
+                <div>分类管理  &nbsp; &nbsp; &nbsp; &nbsp;mv管理   &nbsp; &nbsp;&nbsp;个人信息修改</div>
+                <div class="layui-btn-container">
+                    <a href="song.html" class="layui-btn layui-btn-lg layui-btn-normal">
+                        <i class="layui-icon layui-icon-headset"></i>
+                    </a>
+                    <a href="user.html" class="layui-btn layui-btn-lg layui-btn-normal">
+                        <i class="layui-icon layui-icon-user"></i>
+                    </a>
+                </div>
+                <div>音乐管理 &nbsp; &nbsp; &nbsp; &nbsp;用户管理</div>
+            </div>
+        </div>
+        <!--介绍面板-->
+        <div class="layui-col-xs3">
+            <div class="layui-card">
+                <div class="layui-card-header">主要介绍</div>
+                <div class="layui-collapse" lay-accordion="">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">有哪几个模块？</h2>
+                        <div class="layui-colla-content layui-show">
+                            <p>主要有音乐管理、mv管理、分类管理、用户管理等四个模块
+                            </p>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">首页用了什么技术？</h2>
+                        <div class="layui-colla-content">
+                            <p>首页主要采用了layui、echarts的模块，然后结合ajax技术向后台提取数据生成表格</p>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">第一次使用有什么建议？</h2>
+                        <div class="layui-colla-content">
+                            <p>本界面很简单，是可视化的操作。唯一的建议就是，多用！哈哈哈哈</p>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">项目成员有谁？</h2>
+                        <div class="layui-colla-content">
+                            <p>全是帅哥美女，你有兴趣吗？</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--图片面板-->
+        <div class="layui-col-xs3">
+            <div class="layui-carousel" id="test2">
+                <div carousel-item="">
+                    <div><img src="../pic/不为谁而做的歌mv.jpg" onclick="fun('../mv/不为谁而作的歌.mp4')"></div>
+                    <div><img src="../pic/渴不停mv.jpg" onclick="fun('../mv/渴不停.mp4')"></div>
+                    <div><img src="../pic/RadioactiveMV.jpg" width="500" onclick="fun('../mv/Radioactive.mp4')"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">后台各数据统计</div>
+                <div id="main" style="width: 600px;height:400px;"></div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">歌曲音乐类型占比</div>
+                <div id="biscuit" style="width: 600px;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        version:1,
+        base: "../js/"
+    }).use(['layer','element','echarts','carousel'],function(){
+        var element = layui.element;
+        var carousel = layui.carousel;
+        var $ = layui.jquery;
+        var echarts = layui.echarts;
+        var myChart = echarts.init(document.getElementById('main'));
+        var myChart2 = echarts.init(document.getElementById('biscuit'));
+        myChart.showLoading();
+        myChart2.showLoading();
+        var nums = new Array();
+        var i = 0;
+        nums[i++] = (function () {
+            var result;
+            $.ajax({
+                type:'post',
+                url:'../song/count',
+                dataType:'json',
+                async:false,
+                success:function(res){
+                    //   layer.msg(res.msg);
+                    result = res.code;
+                }
+            });
+            return result;
+        })();
+        nums[i++] = (function () {
+            var result;
+            $.ajax({
+                type:'post',
+                url:'../mv/count',
+                dataType:'json',
+                async:false,
+                success:function(res){
+                    //     layer.msg(res.msg);
+                    result = res.code;
+                }
+            });
+            return result;
+        })();
+        nums[i++] = (function () {
+            var result;
+            $.ajax({
+                type:'post',
+                url:'../type/count',
+                dataType:'json',
+                async:false,
+                success:function(res){
+                    //  layer.msg(res.msg);
+                    result = res.code;
+                }
+            });
+            return result;
+        })();
+        nums[i++] = (function () {
+            var result;
+            $.ajax({
+                type:'post',
+                url:'../user/count',
+                dataType:'json',
+                async:false,
+                success:function(res){
+                    //layer.msg(res.msg);
+                    result = res.code;
+                }
+            });
+            return result;
+        })();
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '数据概览'
+            },
+            tooltip: {},
+            legend: {
+                data:['总数']
+            },
+            xAxis: {
+                data: ["音乐数","MV数","种类数","用户数"]
+            },
+            yAxis: {},
+            series: [{
+                name: '总数',
+                type: 'bar',
+                data: nums,
+            }]
+        };
+
+
+        myChart.setOption(option);
+        myChart.hideLoading();
+
+        var songType = new Array();
+        var songTypeNums = new Array();
+
+        songType = (function () {
+            var result = new Array();
+            $.ajax({
+                type:'post',
+                url:'../type/getSongtype',
+                dataType:'json',
+                async:false,
+                success:function(res){
+
+                    result = res.data;
+                }
+            });
+            return result;
+        })();
+        songTypeNums = (function () {
+            var result = new Array();
+            $.ajax({
+                type:'post',
+                url:'../type/getSongtypeNums',
+                dataType:'json',
+                async:false,
+                success:function(res){
+
+                    result = res.data;
+                }
+            });
+            return result;
+        })();
+
+        myChart2.setOption({
+            textStyle:{
+                color:'rgba(255,255,255,0.3)'
+            },
+            backgroundColor: '#2c343c',
+            series : [
+                {
+                    name: '歌曲类型分布',
+                    type: 'pie',
+                    radius: '55%',
+                    roseType:'angle',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(255, 255, 255, 0.3)'
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            shadowBlur: 200,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    //批量导入数据
+                    data: (function(){
+                        var rs = [];
+                        for(var res in songType){
+                            rs.push({
+                                name:songType[res],
+                                value:songTypeNums[res]
+                            });
+                        }
+                        return rs;
+                    })()
+                }
+            ]
+        })
+        myChart2.hideLoading();
+
+        carousel.render({
+            elem: '#test1'
+            ,arrow: 'always'
+        });
+        carousel.render({
+            elem: '#test2'
+            ,arrow: 'always',
+            width:"500"
+        });
+    })
+
+</script>
+<script>
+    function fun(path) {
+        console.log(path);
+        var videoPath = '<video width ="100%" height="100%"  autoplay = "autoplay" src ="' + path + '"></video>';
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: "mv",
+                area: ['60%', '60%'],
+                content: videoPath
+            })
+        })
+    }
+</script>
+</html>

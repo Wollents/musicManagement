@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css" />
+	</head>
+
+	<body>
+		<!--需要表格来展示数据-->
+		<table class="layui-hide" id="videotable" lay-filter="test"></table>
+
+		<!--行工具栏的自定义按钮-->
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+			<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+		<script type="text/html" id="headDemo">
+		<div class="layui-btn-group">
+				<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add">
+				<i class="layui-icon">&#xe62f;</i>
+		</button>
+		<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" >
+				<i class="layui-icon">&#xe642;</i>
+		</button>
+		<button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">
+				<i class="layui-icon">&#xe640;</i>
+		</button>
+		</div>
+		</script>
+	</body>
+	<script type="text/javascript" src="../layui/layui.js"></script>
+	<script type="text/javascript" src="../js/type.js"></script>
+</html>

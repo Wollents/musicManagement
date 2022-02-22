@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="team.tzjw.music.dao.UserMapper" >
+    <resultMap id="BaseResultMap" type="team.tzjw.music.pojo.User" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="CHAR" />
+        <result column="pic" property="pic" jdbcType="VARCHAR" />
+        <result column="isAdmin" property="isadmin" jdbcType="INTEGER" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="team.tzjw.music.pojo.User" >
+    insert into user (id, name, phone,
+      password, state, sex,
+      pic, isAdmin, email
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{sex,jdbcType=CHAR},
+      #{pic,jdbcType=VARCHAR}, #{isadmin,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="team.tzjw.music.pojo.User" >
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=CHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      isAdmin = #{isadmin,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, name, phone, password, state, sex, pic, isAdmin, email
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, phone, password, state, sex, pic, isAdmin, email
+    from user
+  </select>
+    <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap" >
+   SELECT id,name,phone,password,state,sex,pic,isAdmin,email
+   FROM USER
+   WHERE name = #{name} AND isAdmin=1
+  </select>
+    <update id="updatestate">
+    update user
+    set state = #{state}
+    where id = #{id}
+  </update>
+    <update id="updateisAdmin">
+    update user
+    set isAdmin = #{isadmin}
+    where id = #{id}
+  </update>
+    <select id="countUser" resultType="java.lang.Long">
+    select count(id)
+    from user
+  </select>
+    <select id="getNums" resultType="java.lang.Integer">
+    select count(*)
+    from user
+   </select>
+    <update id="userUpdate" >
+    update user
+    set name=#{name},phone=#{phone},password=#{password},sex=#{sex},email=#{email},pic=#{pic}
+    where id = #{id}
+  </update>
+    <select id="editUser"  parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,name,phone,password,sex,pic,email
+    from user
+     where id=#{id}
+  </select>
+</mapper>

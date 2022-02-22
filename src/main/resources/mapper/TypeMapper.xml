@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="team.tzjw.music.dao.TypeMapper" >
+    <resultMap id="BaseResultMap" type="team.tzjw.music.pojo.Type" >
+        <id column="TID" property="tid" jdbcType="VARCHAR" />
+        <result column="TNAME" property="tname" jdbcType="VARCHAR" />
+        <result column="TDESC" property="tdesc" jdbcType="VARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from type
+    where TID = #{tid}
+  </delete>
+    <insert id="insert" parameterType="team.tzjw.music.pojo.Type" >
+    insert into type (TID, TNAME, TDESC
+      )
+    values (#{tid,jdbcType=VARCHAR}, #{tname,jdbcType=VARCHAR}, #{tdesc,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="team.tzjw.music.pojo.Type" >
+    update type
+    set TNAME = #{tname,jdbcType=VARCHAR},
+      TDESC = #{tdesc,jdbcType=VARCHAR}
+    where TID = #{tid,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select TID, TNAME, TDESC
+    from type
+    where TID = #{tid}
+  </select>
+    <select id="selectAll" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    select TID, TNAME, TDESC
+    from type limit #{page},#{limit}
+  </select>
+    <select id="getNums" resultType="java.lang.Integer">
+    select count(TID)
+    from type
+   </select>
+    <select id="getSongtype" resultType="java.lang.String">
+    SELECT TNAME
+FROM(
+SELECT type.`TNAME`,1 AS 数量
+FROM TYPE,song
+WHERE song.Tid = type.`TID`
+) AS a
+GROUP BY TNAME
+
+   </select>
+    <select id="getSongtypeNums" resultType="java.lang.Integer">
+ select sum(数量) as 歌曲总数
+from(
+Select type.TNAME,1 as 数量
+from type,song
+where song.Tid = type.TID
+) as a
+group by TNAME
+   </select>
+</mapper>

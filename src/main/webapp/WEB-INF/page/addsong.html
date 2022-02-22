@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">歌曲信息</label>
+        <div class="layui-input-block">
+            <input id="songpath" name="songpath" class="layui-input" type="text" placeholder="地址" autocomplete="off"
+                   lay-verify="title">
+            <button class="layui-btn" id="audioupload" type="button"><i class="layui-icon"></i>上传音频</button>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">歌曲名称</label>
+        <div class="layui-input-block">
+            <textarea class="layui-textarea" placeholder="请输入内容" name="stitle"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" type="submit" lay-filter="audiosubmit" lay-submit="">立即提交</button>
+            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+        </div>
+    </div>
+</form>
+
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script>
+    layui.use(['form', 'upload', 'layer'], function () {
+        var form = layui.form,
+            upload = layui.upload,
+            $ = layui.jquery,
+            layer = layui.layer
+        //音频的上传操作
+        upload.render({
+            elem: '#audioupload'
+            , url: '../song/up' //改成您自己的上传接口
+            , auto: true
+            , accept: 'audio' //音频
+            , done: function (res) { //回调函数 当上传成功以后需要做的事情
+                //需要将地址添加到我们的信息中心
+                $("#songpath").val(res.msg)
+            }
+        });
+        //form表单的提交
+        form.on('submit(audiosubmit)', function (data) {
+            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                type: 'POST',
+                url: '../song/add',
+                data: data.field,
+                dataType: 'json',
+                success: function (res) {
+                    window.parent.location.reload()
+                }
+            })
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    })
+</script>
+</html>

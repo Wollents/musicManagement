@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="team.tzjw.music.dao.SongMapper">
+    <resultMap id="BaseResultMap" type="team.tzjw.music.pojo.Song">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="stitle" property="stitle" jdbcType="VARCHAR"/>
+        <result column="songTime" property="songtime" jdbcType="REAL"/>
+        <result column="singer" property="singer" jdbcType="VARCHAR"/>
+        <result column="singerID" property="singerid" jdbcType="VARCHAR"/>
+        <result column="albumID" property="albumid" jdbcType="VARCHAR"/>
+        <result column="albumName" property="albumname" jdbcType="VARCHAR"/>
+        <result column="Tid" property="tid" jdbcType="VARCHAR"/>
+        <result column="userId" property="userid" jdbcType="VARCHAR"/>
+        <result column="songPath" property="songpath" jdbcType="VARCHAR"/>
+        <result column="size" property="size" jdbcType="DOUBLE"/>
+        <result column="albumPic" property="albumpic" jdbcType="VARCHAR"/>
+        <result column="lyricPath" property="lyricpath" jdbcType="VARCHAR"/>
+        <result column="playNum" property="playnum" jdbcType="BIGINT"/>
+        <result column="createTime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="likeCounts" property="likecounts" jdbcType="BIGINT"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from song
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="team.tzjw.music.pojo.Song">
+    insert into song (id, stitle, songTime,
+      singer, singerID, albumID,
+      albumName, Tid, userId,
+      songPath, size, albumPic,
+      lyricPath, playNum, createTime,
+      likeCounts, status)
+    values (#{id,jdbcType=VARCHAR}, #{stitle,jdbcType=VARCHAR}, #{songtime,jdbcType=REAL},
+      #{singer,jdbcType=VARCHAR}, #{singerid,jdbcType=VARCHAR}, #{albumid,jdbcType=VARCHAR},
+      #{albumname,jdbcType=VARCHAR}, #{tid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR},
+      #{songpath,jdbcType=VARCHAR}, #{size,jdbcType=DOUBLE}, #{albumpic,jdbcType=VARCHAR},
+      #{lyricpath,jdbcType=VARCHAR}, #{playnum,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP},
+      #{likecounts,jdbcType=BIGINT}, #{status,jdbcType=INTEGER})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="team.tzjw.music.pojo.Song">
+    update song
+    set stitle = #{stitle,jdbcType=VARCHAR},
+      songTime = #{songtime,jdbcType=REAL},
+      singer = #{singer,jdbcType=VARCHAR},
+      singerID = #{singerid,jdbcType=VARCHAR},
+      albumID = #{albumid,jdbcType=VARCHAR},
+      albumName = #{albumname,jdbcType=VARCHAR},
+      Tid = #{tid,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      songPath = #{songpath,jdbcType=VARCHAR},
+      size = #{size,jdbcType=DOUBLE},
+      albumPic = #{albumpic,jdbcType=VARCHAR},
+      lyricPath = #{lyricpath,jdbcType=VARCHAR},
+      playNum = #{playnum,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      likeCounts = #{likecounts,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, stitle, songTime, singer, singerID, albumID, albumName, Tid, userId, songPath, 
+    size, albumPic, lyricPath, playNum, createTime, likeCounts, status
+    from song
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+    <select id="countSong" resultType="java.lang.Long">
+    SELECT COUNT(id)
+    FROM song
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, stitle, songTime, singer, albumName, Tid, userId, songPath,
+    size, albumPic, lyricPath, playNum, createTime, likeCounts, status
+    from song limit #{page},#{pageTotal}
+  </select>
+    <select id="detail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT stitle,songpath
+    FROM song
+    WHERE song.`id`=#{id}
+  </select>
+    <update id="updateStatus">
+    update song  set status = #{status}  where id = #{id}
+  </update>
+    <select id="editDetail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, userId, playNum, likeCounts
+    from song
+    where id = #{id}
+  </select>
+    <update id="update">
+    update song
+    set userId = #{userid}, playNum = #{playnum}, likeCounts = #{likecounts}
+    where id = #{id}
+  </update>
+    <select id="selectByIdLike" resultMap="BaseResultMap">
+    select *
+    from song
+    where id  like concat('%',#{id},'%') limit #{page},#{limit}
+  </select>
+    <select id="getNums" resultType="java.lang.Integer">
+    select count(*)
+    from song
+   </select>
+</mapper>

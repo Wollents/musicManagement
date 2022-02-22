@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+</head>
+<body>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>详细信息</legend>
+    </fieldset>
+
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">mv上传者</label>
+            <div class="layui-input-inline">
+                <input type="text" style="text-align: center;" disabled id="userid" name="userid" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">mv大小</label>
+            <div class="layui-input-inline">
+                <input type="text" style="text-align: center;" disabled id="size" name="size" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">MB</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">mv高度</label>
+            <div class="layui-input-inline">
+                <input disabled style="text-align: center;" type="text" id="mvheight" name="mvheight" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">mv宽度</label>
+            <div class="layui-input-inline">
+                <input disabled style="text-align: center;" type="text" id="mvwidth" name="mvwidth" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">mv路径</label>
+            <div class="layui-input-block">
+                <input disabled type="text" id="mvpath" name="mvpath" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">mv描述</label>
+            <div class="layui-input-block">
+                <textarea disabled name="mvdesc" id="mvdesc" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </form>
+
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+</html>

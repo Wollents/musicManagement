@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../layui/css/layui.css"/>
+</head>
+<body>
+<div class="like" style="margin-top: 10px;margin-left: 35%">
+    搜索：
+    <div class="layui-inline">
+        <input class="layui-input" name="id" id="songLike" autocomplete="off">
+    </div>
+    <button class="layui-btn" data-type="reload" id="re">搜索</button>
+</div>
+<table class="layui-hide" id="songtable" lay-filter="songtest"></table>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">预览</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+</script>
+<script type="text/html" id="headDemo">
+    <div class="layui-btn-group">
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="add">
+            <i class="layui-icon">&#xe654;</i>
+        </button>
+        <!--<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="update">-->
+        <!--<i class="layui-icon">&#xe642;</i>-->
+        <!--</button>-->
+        <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" lay-event="delete">
+            <i class="layui-icon">&#xe640;</i>
+        </button>
+    </div>
+</script>
+</body>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../js/song.js"></script>
+</html>
